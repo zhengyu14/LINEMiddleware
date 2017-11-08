@@ -1,0 +1,7 @@
+---
+applications:
+- name: line-proxy-ip-filter
+  buildpack: nodejs_buildpack
+  instances: 1
+  memory: 1G
+  host: line-proxy-ip-filter
