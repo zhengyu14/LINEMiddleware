@@ -1,7 +1,0 @@
----
-applications:
-- name: line-proxy
-  buildpack: nodejs_buildpack
-  instances: 1
-  memory: 1G
-  host: line-proxy

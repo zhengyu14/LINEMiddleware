@@ -1,0 +1,5 @@
+zuul:
+  routes:
+    verify:
+      path: /verify/**
+      url: http://localhost:3000/verify
