@@ -1,0 +1,7 @@
+---
+applications:
+- name: line_proxy_basic_auth
+  buildpack: nodejs_buildpack
+  instances: 1
+  memory: 256MB
+  host: line_proxy_basic_auth
