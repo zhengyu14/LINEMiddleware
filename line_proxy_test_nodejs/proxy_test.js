@@ -4,13 +4,14 @@ var request = require ( 'request' );
 var port = 3000;
 var app = express( );
 
-app.get( '/verify', function(req, res ) {
-  console.log("ok");
-  res.send('ok')
+app.get( '/verify', function( req, res ) {
+  console.log( "ok" );
+  res.send( 'ok' )
 });
 
 app.get( '/v2/bot/profile/:id', function(req, res ) {
-  res.send('ok')
+  console.log( req.get( 'Authorization' ) );
+  res.send( 'ok' )
 });
 
 app.listen( process.env.PORT || port );

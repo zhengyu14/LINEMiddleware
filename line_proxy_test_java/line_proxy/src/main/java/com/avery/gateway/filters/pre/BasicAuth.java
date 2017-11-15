@@ -32,7 +32,7 @@ public class BasicAuth extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
 
-        // Basic Authentication
+        // Basic authentication
         String requestAuthValue = request.getHeader("Authorization" );
         if ( requestAuthValue.equals(authValue) ) {
             log.info( "Authenticated." );
@@ -41,8 +41,9 @@ public class BasicAuth extends ZuulFilter {
             return null;
         } else {
             log.info( "Access denied: wrong user name or password." );
-            lctx.setSendZuulResponse( false );
+            ctx.setSendZuulResponse( false );
             ctx.setResponseStatusCode( 401 );
+
             return null;
         }
 
