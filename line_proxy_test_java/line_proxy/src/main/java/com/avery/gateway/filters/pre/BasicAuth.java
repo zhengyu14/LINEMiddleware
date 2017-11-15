@@ -6,9 +6,11 @@ import com.netflix.zuul.ZuulFilter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.lang.String;
 
 public class BasicAuth extends ZuulFilter {
-    private static Logger log = LoggerFactory.getLogger(SimpleFilter.class);
+    private static String authValue = "Basic YWRtaW46c3VwZXJzZWNyZXQ=";
+    private static Logger log = LoggerFactory.getLogger(BasicAuth.class);
 
     @Override
     public String filterType() {
@@ -30,10 +32,19 @@ public class BasicAuth extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
 
+        // Basic Authentication
+        String requestAuthValue = request.getHeader("Authorization" );
+        if ( requestAuthValue.equals(authValue) ) {
+            log.info( "Authenticated." );
+            log.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
 
+            return null;
+        } else {
+            log.info( "Access denied: wrong user name or password." );
+            lctx.setSendZuulResponse( false );
+            ctx.setResponseStatusCode( 401 );
+            return null;
+        }
 
-        log.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
-
-        return null;
     }
 }
