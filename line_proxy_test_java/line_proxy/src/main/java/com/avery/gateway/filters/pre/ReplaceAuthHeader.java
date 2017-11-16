@@ -37,10 +37,17 @@ public class ReplaceAuthHeader extends ZuulFilter {
         String requestUrl = request.getRequestURI();
         log.info("Method: " + requestMethod + " URL: " + requestUrl);
 
-        if ( requestMethod.equals( "GET" ) ) {
-            if ( requestUrl.startsWith( "/v2/bot/profile/" ) ) {
-                ctx.addZuulRequestHeader("Authorization", channelAccessToken );
-            }
+        if ( requestMethod.equals( "GET" ) && requestUrl.startsWith( "/v2/bot/profile/" ) ) {
+            // Process request: get user profiles
+            ctx.addZuulRequestHeader("Authorization", channelAccessToken );
+        } else if ( requestMethod.equals( "POST" )&& requestUrl.equals( "/v2/bot/message/multicast" ) ) {
+            // Process request: multicast
+            ctx.addZuulRequestHeader("Authorization", channelAccessToken );
+        } else if ( requestMethod.equals( "POST" )&& requestUrl.equals( "/v2/oauth/verify" ) ) {
+            // Process request: verify access token
+        } else {
+            ctx.setSendZuulResponse( false );
+            ctx.setResponseStatusCode( 403 );
         }
 
         return null;

@@ -4,13 +4,18 @@ var request = require ( 'request' );
 var port = 3000;
 var app = express( );
 
-app.get( '/verify', function( req, res ) {
-  console.log( "ok" );
+app.post( '/v2/oauth/verify', function( req, res ) {
+  console.log( req.headers );
   res.send( 'ok' )
 });
 
 app.get( '/v2/bot/profile/:id', function(req, res ) {
-  console.log( req.get( 'Authorization' ) );
+  console.log( req.headers );
+  res.send( 'ok' )
+});
+
+app.post( '/v2/bot/message/multicast', function( req, res ) {
+  console.log( req.headers );
   res.send( 'ok' )
 });
 
