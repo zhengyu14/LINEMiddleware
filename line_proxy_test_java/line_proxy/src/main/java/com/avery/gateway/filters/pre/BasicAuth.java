@@ -7,9 +7,11 @@ import com.netflix.zuul.ZuulFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.lang.String;
+import java.util.Base64;
 
 public class BasicAuth extends ZuulFilter {
-    private static String authValue = "Basic YWRtaW46c3VwZXJzZWNyZXQ=";
+    private static String encoding = Base64.getEncoder().encodeToString(("admin:supersecret").getBytes());
+    private static String authValue = "Basic " + encoding;
     private static Logger log = LoggerFactory.getLogger(BasicAuth.class);
 
     @Override
